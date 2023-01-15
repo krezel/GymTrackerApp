@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/xx_xx_xxxx"
+                android:textSize="22sp"
+                android:layout_margin="10dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/tv_exercise"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Exercise 1"
+                    android:textSize="17sp"/>
+                <TextView
+                    android:id="@+id/tv_kg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="XXX kg"
+                    android:textSize="17sp"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="6">
+        <Button
+            android:id="@+id/btn_dodaj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DODAJ TRENING"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/black"
+            android:padding="15dp" />
+    </LinearLayout>
+</LinearLayout>

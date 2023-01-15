@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">GymTracker</string>
+    <string name="xx_xx_xxxx">XX/XX/XXXX</string>
+    <string-array name="exercise_array">
+        <item>Pajacyk</item>
+        <item>Zarzut</item>
+        <item>Przysiad</item>
+        <item>Przysiad do cofnięcia</item>
+        <item>Przeskok wypadami</item>
+        <item>Wstępowanie do wyskoku</item>
+        <item>Hip thrust</item>
+        <item>Wyciskanie</item>
+    </string-array>
+</resources>
