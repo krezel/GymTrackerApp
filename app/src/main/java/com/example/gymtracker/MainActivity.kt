@@ -18,8 +18,9 @@ class MainActivity : AppCompatActivity() {
         btnAdd.setOnClickListener {
             newActivity()
         }
+        val listaCwiczen = intent.getStringArrayListExtra("cwiczenie")
+        tvEx.text = listaCwiczen?.get(6)
         tvData.text = intent.getStringExtra("data")
-        tvEx.text = intent.getStringExtra("cwiczenie")
         tvKg.text = intent.getStringExtra("ciezar")
     }
     private fun newActivity(){

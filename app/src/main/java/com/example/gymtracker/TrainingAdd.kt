@@ -11,13 +11,18 @@ import java.util.*
 class TrainingAdd : AppCompatActivity() {
     private var dataText: TextView? = null
     var wybranaData:String? = null
-    var listExercise:String? = null
+    var listExercise = arrayListOf<String>()
     var listWeight:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training_add)
         val btnZapisz = findViewById<Button>(R.id.btn_dodaj_submit)
         val spinner = findViewById<Spinner>(R.id.spinner)
+        val spinner2 = findViewById<Spinner>(R.id.spinner2)
+        val spinner3 = findViewById<Spinner>(R.id.spinner3)
+        val spinner4 = findViewById<Spinner>(R.id.spinner4)
+        val spinner5 = findViewById<Spinner>(R.id.spinner5)
+        val spinner6 = findViewById<Spinner>(R.id.spinner6)
         val btnDate = findViewById<Button>(R.id.btn_dodaj_date)
         val kgInput = findViewById<EditText>(R.id.et_kg_dodaj)
         dataText = findViewById(R.id.tv_date_dodaj)
@@ -28,19 +33,18 @@ class TrainingAdd : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
+            spinner2.adapter = adapter
+            spinner3.adapter = adapter
+            spinner4.adapter = adapter
+            spinner5.adapter = adapter
+            spinner6.adapter = adapter
         }
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                listExercise = adapterView?.getItemAtPosition(position).toString()
-            }
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
+        spin(spinner)
+        spin(spinner2)
+        spin(spinner3)
+        spin(spinner4)
+        spin(spinner5)
+        spin(spinner6)
         btnDate.setOnClickListener {
             klikDatePicker()
         }
@@ -51,7 +55,7 @@ class TrainingAdd : AppCompatActivity() {
     }
     private fun oldActivity(){
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("cwiczenie",listExercise)
+        intent.putStringArrayListExtra("cwiczenie",listExercise)
         intent.putExtra("ciezar",listWeight)
         intent.putExtra("data",wybranaData)
         startActivity(intent)
@@ -71,4 +75,19 @@ class TrainingAdd : AppCompatActivity() {
         dpd.show()
         return dataText?.text
     }
+    private fun spin(spinner:Spinner){
+    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            adapterView: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            listExercise.add(adapterView?.getItemAtPosition(position).toString())
+        }
+        override fun onNothingSelected(p0: AdapterView<*>?) {
+        }
+    }
 }
+}
+
