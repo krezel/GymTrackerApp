@@ -15,13 +15,19 @@ class MainActivity : AppCompatActivity() {
         val tvData = findViewById<TextView>(R.id.tv_date)
         val tvEx = findViewById<TextView>(R.id.tv_exercise)
         val tvKg = findViewById<TextView>(R.id.tv_kg)
+        val tvKg2 = findViewById<TextView>(R.id.tv_kg2)
+        val tvKg3 = findViewById<TextView>(R.id.tv_kg3)
+        val tvKg4 = findViewById<TextView>(R.id.tv_kg4)
+        val tvKg5 = findViewById<TextView>(R.id.tv_kg5)
+        val tvKg6 = findViewById<TextView>(R.id.tv_kg6)
         btnAdd.setOnClickListener {
             newActivity()
         }
         val listaCwiczen = intent.getStringArrayListExtra("cwiczenie")
         tvEx.text = listaCwiczen?.get(6)
         tvData.text = intent.getStringExtra("data")
-        tvKg.text = intent.getStringExtra("ciezar")
+        val listaCiezarow = intent.getStringArrayListExtra("ciezar").toString()
+        tvKg.text = listaCiezarow[0].toString()
     }
     private fun newActivity(){
         val intent1 = Intent(this, TrainingAdd::class.java)

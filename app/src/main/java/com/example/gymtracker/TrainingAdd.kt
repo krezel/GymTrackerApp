@@ -12,7 +12,7 @@ class TrainingAdd : AppCompatActivity() {
     private var dataText: TextView? = null
     var wybranaData:String? = null
     var listExercise = arrayListOf<String>()
-    var listWeight:String? = null
+    var listWeight = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training_add)
@@ -25,20 +25,12 @@ class TrainingAdd : AppCompatActivity() {
         val spinner6 = findViewById<Spinner>(R.id.spinner6)
         val btnDate = findViewById<Button>(R.id.btn_dodaj_date)
         val kgInput = findViewById<EditText>(R.id.et_kg_dodaj)
+        val kgInput2 = findViewById<EditText>(R.id.et_kg_dodaj2)
+        val kgInput3 = findViewById<EditText>(R.id.et_kg_dodaj3)
+        val kgInput4 = findViewById<EditText>(R.id.et_kg_dodaj4)
+        val kgInput5 = findViewById<EditText>(R.id.et_kg_dodaj5)
+        val kgInput6 = findViewById<EditText>(R.id.et_kg_dodaj6)
         dataText = findViewById(R.id.tv_date_dodaj)
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.exercise_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
-            spinner2.adapter = adapter
-            spinner3.adapter = adapter
-            spinner4.adapter = adapter
-            spinner5.adapter = adapter
-            spinner6.adapter = adapter
-        }
         spin(spinner)
         spin(spinner2)
         spin(spinner3)
@@ -49,14 +41,19 @@ class TrainingAdd : AppCompatActivity() {
             klikDatePicker()
         }
         btnZapisz.setOnClickListener {
-            listWeight = kgInput.text.toString()
+            listWeight.add(kgInput.text.toString())
+            listWeight.add(kgInput2.text.toString())
+            listWeight.add(kgInput3.text.toString())
+            listWeight.add(kgInput4.text.toString())
+            listWeight.add(kgInput5.text.toString())
+            listWeight.add(kgInput6.text.toString())
             oldActivity()
         }
     }
     private fun oldActivity(){
         val intent = Intent(this, MainActivity::class.java)
         intent.putStringArrayListExtra("cwiczenie",listExercise)
-        intent.putExtra("ciezar",listWeight)
+        intent.putStringArrayListExtra("ciezar",listWeight)
         intent.putExtra("data",wybranaData)
         startActivity(intent)
     }

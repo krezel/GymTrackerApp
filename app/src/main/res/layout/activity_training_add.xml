@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:entries="@array/exercise_array"
                 android:textSize="17sp"/>
             <EditText
                 android:id="@+id/et_kg_dodaj"
@@ -56,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:entries="@array/exercise_array"
                 android:textSize="17sp"/>
             <EditText
                 android:id="@+id/et_kg_dodaj2"
@@ -76,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:entries="@array/exercise_array"
                 android:textSize="17sp"/>
             <EditText
                 android:id="@+id/et_kg_dodaj3"
@@ -96,6 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:entries="@array/exercise_array"
                 android:textSize="17sp"/>
             <EditText
                 android:id="@+id/et_kg_dodaj4"
@@ -116,6 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:entries="@array/exercise_array"
                 android:textSize="17sp"/>
             <EditText
                 android:id="@+id/et_kg_dodaj5"
@@ -136,6 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:entries="@array/exercise_array"
                 android:textSize="17sp"/>
             <EditText
                 android:id="@+id/et_kg_dodaj6"
