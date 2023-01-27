@@ -10,54 +10,40 @@ import java.util.*
 
 class TrainingAdd : AppCompatActivity() {
     private var dataText: TextView? = null
-    var wybranaData:String? = null
-    var listExercise = arrayListOf<String>()
-    var listWeight = arrayListOf<String>()
+    lateinit var wybranaData:String
+    lateinit var exercise:String
+    lateinit var waga:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training_add)
         val btnZapisz = findViewById<Button>(R.id.btn_dodaj_submit)
+        val btnEx = findViewById<Button>(R.id.btn_ex)
         val spinner = findViewById<Spinner>(R.id.spinner)
-        val spinner2 = findViewById<Spinner>(R.id.spinner2)
-        val spinner3 = findViewById<Spinner>(R.id.spinner3)
-        val spinner4 = findViewById<Spinner>(R.id.spinner4)
-        val spinner5 = findViewById<Spinner>(R.id.spinner5)
-        val spinner6 = findViewById<Spinner>(R.id.spinner6)
         val btnDate = findViewById<Button>(R.id.btn_dodaj_date)
         val kgInput = findViewById<EditText>(R.id.et_kg_dodaj)
-        val kgInput2 = findViewById<EditText>(R.id.et_kg_dodaj2)
-        val kgInput3 = findViewById<EditText>(R.id.et_kg_dodaj3)
-        val kgInput4 = findViewById<EditText>(R.id.et_kg_dodaj4)
-        val kgInput5 = findViewById<EditText>(R.id.et_kg_dodaj5)
-        val kgInput6 = findViewById<EditText>(R.id.et_kg_dodaj6)
         dataText = findViewById(R.id.tv_date_dodaj)
+        val addLayout = findViewById<LinearLayout>(R.id.add_layout)
+        var i = 1
+        btnEx.setOnClickListener {
+                val inputLayout = layoutInflater.inflate(R.layout.input_layout,null)
+                inputLayout.id = i++
+                addLayout.addView(inputLayout)
+        }
         spin(spinner)
-        spin(spinner2)
-        spin(spinner3)
-        spin(spinner4)
-        spin(spinner5)
-        spin(spinner6)
         btnDate.setOnClickListener {
             klikDatePicker()
         }
         btnZapisz.setOnClickListener {
-            listWeight.add(kgInput.text.toString())
-            listWeight.add(kgInput2.text.toString())
-            listWeight.add(kgInput3.text.toString())
-            listWeight.add(kgInput4.text.toString())
-            listWeight.add(kgInput5.text.toString())
-            listWeight.add(kgInput6.text.toString())
-            oldActivity()
+            waga = kgInput.text.toString()
+            Intent(this, MainActivity::class.java).also {
+                it.putExtra("EXTRA_EXERCISE",exercise)
+                it.putExtra("EXTRA_DATE",wybranaData)
+                it.putExtra("EXTRA_WEIGHT",waga)
+                startActivity(it)
+            }
         }
     }
-    private fun oldActivity(){
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putStringArrayListExtra("cwiczenie",listExercise)
-        intent.putStringArrayListExtra("ciezar",listWeight)
-        intent.putExtra("data",wybranaData)
-        startActivity(intent)
-    }
-    private fun klikDatePicker(): CharSequence? {
+    private fun klikDatePicker() {
         val myCalendar = Calendar.getInstance()
         val year = myCalendar.get(Calendar.YEAR)
         val month = myCalendar.get(Calendar.MONTH)
@@ -70,7 +56,6 @@ class TrainingAdd : AppCompatActivity() {
             }, year, month, day
         )
         dpd.show()
-        return dataText?.text
     }
     private fun spin(spinner:Spinner){
     spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -80,7 +65,7 @@ class TrainingAdd : AppCompatActivity() {
             position: Int,
             id: Long
         ) {
-            listExercise.add(adapterView?.getItemAtPosition(position).toString())
+            exercise = (adapterView?.getItemAtPosition(position).toString())
         }
         override fun onNothingSelected(p0: AdapterView<*>?) {
         }

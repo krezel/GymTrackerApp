@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/input_layout2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="10dp">
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:entries="@array/exercise_array"
+        android:textSize="17sp"
+        android:layout_margin="10dp"/>
+    <EditText
+        android:id="@+id/et_kg_dodaj2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:inputType="text"
+        android:textSize="17sp"
+        android:layout_marginStart="12dp"
+        android:hint="KG"
+        android:layout_margin="10dp"/>
+
+</LinearLayout>
