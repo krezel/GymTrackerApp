@@ -18,9 +18,10 @@ class MainActivity : AppCompatActivity() {
         val tvData = findViewById<TextView>(R.id.tv_date)
         val tvEx = findViewById<TextView>(R.id.tv_exercise)
         val tvKg = findViewById<TextView>(R.id.tv_kg)
-        tvEx.text = intent.getStringExtra("EXTRA_EXERCISE")
-        tvData.text = intent.getStringExtra("EXTRA_DATE")
-        tvKg.text = intent.getStringExtra("EXTRA_WEIGHT")
+        val training = intent.getSerializableExtra("EXTRA_TRAINING") as? Training
+        tvData.text = training?.date
+        tvEx.text = training?.name
+        tvKg.text = training?.weight
         btnAdd.setOnClickListener {
             Intent(this, TrainingAdd::class.java).also {
                 startActivity(it)

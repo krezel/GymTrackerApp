@@ -35,10 +35,9 @@ class TrainingAdd : AppCompatActivity() {
         }
         btnZapisz.setOnClickListener {
             waga = kgInput.text.toString()
+            val training = Training(exercise,waga,wybranaData)
             Intent(this, MainActivity::class.java).also {
-                it.putExtra("EXTRA_EXERCISE",exercise)
-                it.putExtra("EXTRA_DATE",wybranaData)
-                it.putExtra("EXTRA_WEIGHT",waga)
+                it.putExtra("EXTRA_TRAINING",training)
                 startActivity(it)
             }
         }
