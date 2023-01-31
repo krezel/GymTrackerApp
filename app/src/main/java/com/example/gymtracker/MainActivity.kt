@@ -1,30 +1,44 @@
 package com.example.gymtracker
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import java.io.Serializable
+import androidx.core.widget.NestedScrollView
 
 
 class MainActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val btnAdd = findViewById<Button>(R.id.btn_dodaj)
-        val tvData = findViewById<TextView>(R.id.tv_date)
-        val tvEx = findViewById<TextView>(R.id.tv_exercise)
-        val tvKg = findViewById<TextView>(R.id.tv_kg)
-        val training = intent.getSerializableExtra("EXTRA_TRAINING") as? Training
-        tvData.text = training?.date
-        tvEx.text = training?.name
-        tvKg.text = training?.weight
+        newTraining()
         btnAdd.setOnClickListener {
             Intent(this, TrainingAdd::class.java).also {
                 startActivity(it)
+            }
+        }
+    }
+    fun newTraining(){
+        val addToList = findViewById<LinearLayout>(R.id.scroll_layout)
+        val dateBox = layoutInflater.inflate(R.layout.date_box,null)
+        val listaEx = intent.getStringArrayListExtra("EXTRA_EXERCISE")
+        val listaKg = intent.getStringArrayListExtra("EXTRA_WEIGHT")
+        val date = intent.getStringExtra("EXTRA_DATE")
+        if (listaEx != null && listaKg != null) {
+            dateBox.findViewById<TextView>(R.id.tv_dateBOX).text = date
+            addToList.addView(dateBox)
+            for (i in listaEx.indices){
+                val trainingBox = layoutInflater.inflate(R.layout.training_box,null)
+                trainingBox.findViewById<TextView>(R.id.tv_exerciseBOX).text = listaEx[i]
+                trainingBox.findViewById<TextView>(R.id.tv_kgBOX).text = listaKg[i]
+                addToList.addView(trainingBox)
             }
         }
     }

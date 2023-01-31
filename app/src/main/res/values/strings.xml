@@ -2,6 +2,7 @@
     <string name="app_name">GymTracker</string>
     <string name="xx_xx_xxxx">XX/XX/XXXX</string>
     <string-array name="exercise_array">
+        <item> </item>
         <item>Pajacyk</item>
         <item>Zarzut</item>
         <item>Przysiad</item>

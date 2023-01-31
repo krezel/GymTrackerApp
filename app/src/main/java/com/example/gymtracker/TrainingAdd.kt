@@ -6,41 +6,29 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class TrainingAdd : AppCompatActivity() {
     private var dataText: TextView? = null
     lateinit var wybranaData:String
     lateinit var exercise:String
-    lateinit var waga:String
+    private val listaEx = arrayListOf<String>()
+    private val listaKg = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training_add)
         val btnZapisz = findViewById<Button>(R.id.btn_dodaj_submit)
         val btnEx = findViewById<Button>(R.id.btn_ex)
-        val spinner = findViewById<Spinner>(R.id.spinner)
         val btnDate = findViewById<Button>(R.id.btn_dodaj_date)
-        val kgInput = findViewById<EditText>(R.id.et_kg_dodaj)
         dataText = findViewById(R.id.tv_date_dodaj)
         val addLayout = findViewById<LinearLayout>(R.id.add_layout)
-        var i = 1
-        btnEx.setOnClickListener {
-                val inputLayout = layoutInflater.inflate(R.layout.input_layout,null)
-                inputLayout.id = i++
-                addLayout.addView(inputLayout)
-        }
-        spin(spinner)
         btnDate.setOnClickListener {
             klikDatePicker()
         }
-        btnZapisz.setOnClickListener {
-            waga = kgInput.text.toString()
-            val training = Training(exercise,waga,wybranaData)
-            Intent(this, MainActivity::class.java).also {
-                it.putExtra("EXTRA_TRAINING",training)
-                startActivity(it)
-            }
-        }
+            newInput(addLayout,btnEx,btnZapisz)
     }
     private fun klikDatePicker() {
         val myCalendar = Calendar.getInstance()
@@ -64,11 +52,35 @@ class TrainingAdd : AppCompatActivity() {
             position: Int,
             id: Long
         ) {
-            exercise = (adapterView?.getItemAtPosition(position).toString())
+            if (position>0){
+                exercise = (adapterView?.getItemAtPosition(position).toString())
+                listaEx.add(exercise)
+            }
         }
         override fun onNothingSelected(p0: AdapterView<*>?) {
         }
     }
 }
+    private fun newInput(LL:LinearLayout, btn:Button,btn2:Button){
+        val list = arrayListOf<EditText>()
+        btn.setOnClickListener {
+            val inputLayout = layoutInflater.inflate(R.layout.input_layout,null)
+            spin(inputLayout.findViewById(R.id.spinnerADD))
+            val editText = inputLayout.findViewById<EditText>(R.id.et_kg_dodajADD)
+            list.add(editText)
+            LL.addView(inputLayout)
+        }
+        btn2.setOnClickListener {
+            for(item in list){
+                listaKg.add(item.text.toString())
+            }
+            Intent(this, MainActivity::class.java).also {
+                it.putStringArrayListExtra("EXTRA_EXERCISE",listaEx)
+                it.putStringArrayListExtra("EXTRA_WEIGHT",listaKg)
+                it.putExtra("EXTRA_DATE",wybranaData)
+                startActivity(it)
+            }
+        }
+    }
 }
 
