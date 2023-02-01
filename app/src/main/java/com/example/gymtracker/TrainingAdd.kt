@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.lifecycle.lifecycleScope
+import com.example.gymtracker.entities.Training
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,7 +15,7 @@ import java.util.*
 
 class TrainingAdd : AppCompatActivity() {
     private var dataText: TextView? = null
-    lateinit var wybranaData:String
+    var wybranaData:String? = null
     lateinit var exercise:String
     private val listaEx = arrayListOf<String>()
     private val listaKg = arrayListOf<String>()
@@ -62,6 +64,7 @@ class TrainingAdd : AppCompatActivity() {
     }
 }
     private fun newInput(LL:LinearLayout, btn:Button,btn2:Button){
+        val dao = TrainingDatabase.getInstance(this).trainingDao
         val list = arrayListOf<EditText>()
         btn.setOnClickListener {
             val inputLayout = layoutInflater.inflate(R.layout.input_layout,null)
@@ -71,14 +74,22 @@ class TrainingAdd : AppCompatActivity() {
             LL.addView(inputLayout)
         }
         btn2.setOnClickListener {
-            for(item in list){
-                listaKg.add(item.text.toString())
-            }
-            Intent(this, MainActivity::class.java).also {
-                it.putStringArrayListExtra("EXTRA_EXERCISE",listaEx)
-                it.putStringArrayListExtra("EXTRA_WEIGHT",listaKg)
-                it.putExtra("EXTRA_DATE",wybranaData)
-                startActivity(it)
+            if(wybranaData==null)
+                klikDatePicker()
+            else{
+                for(item in list){
+                    listaKg.add(item.text.toString())
+                }
+                Intent(this, MainActivity::class.java).also {
+                    it.putStringArrayListExtra("EXTRA_EXERCISE",listaEx)
+                    it.putStringArrayListExtra("EXTRA_WEIGHT",listaKg)
+                    it.putExtra("EXTRA_DATE",wybranaData)
+                    startActivity(it)
+                }
+                lifecycleScope.launch{
+                    val training = Training(listaEx,listaKg, wybranaData!!)
+                    dao.insertTraining(training)
+                }
             }
         }
     }
