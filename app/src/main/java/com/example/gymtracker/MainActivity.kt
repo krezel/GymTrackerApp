@@ -19,19 +19,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val btnAdd = findViewById<Button>(R.id.btn_dodaj)
-        newTraining()
+        val btnDelete = findViewById<Button>(R.id.btn_delete)
+        newTraining(btnDelete)
         btnAdd.setOnClickListener {
             Intent(this, TrainingAdd::class.java).also {
                 startActivity(it)
             }
         }
     }
-    private fun newTraining(){
+    private fun newTraining(btn:Button){
+        val dao = TrainingDatabase.getInstance(this).trainingDao
         val addToList = findViewById<LinearLayout>(R.id.scroll_layout)
-        val dateBox = layoutInflater.inflate(R.layout.date_box,null)
         val listaEx = intent.getStringArrayListExtra("EXTRA_EXERCISE")
         val listaKg = intent.getStringArrayListExtra("EXTRA_WEIGHT")
         val date = intent.getStringExtra("EXTRA_DATE")
+        val dateBox = layoutInflater.inflate(R.layout.date_box,null)
         if (listaEx != null && listaKg != null && date != null) {
             dateBox.findViewById<TextView>(R.id.tv_dateBOX).text = date
             addToList.addView(dateBox)
@@ -40,6 +42,12 @@ class MainActivity : AppCompatActivity() {
                 trainingBox.findViewById<TextView>(R.id.tv_exerciseBOX).text = listaEx[i]
                 trainingBox.findViewById<TextView>(R.id.tv_kgBOX).text = listaKg[i]
                 addToList.addView(trainingBox)
+            }
+        }
+        btn.setOnClickListener {
+            lifecycleScope.launch {
+                if (listaEx != null && listaKg != null && date != null)
+                    dao.deleteTraining(Training(listaEx,listaKg,date))
             }
         }
     }
