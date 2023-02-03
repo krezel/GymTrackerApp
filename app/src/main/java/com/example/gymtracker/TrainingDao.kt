@@ -16,4 +16,7 @@ interface TrainingDao {
     @Query
         ("DELETE FROM Training")
     suspend fun deleteAll()
+    @Query
+        ("SELECT * FROM Training")
+    fun getAll() : List<Training>
 }
