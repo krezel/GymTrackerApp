@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
+import com.example.gymtracker.entities.Date
 import com.example.gymtracker.entities.Training
 import kotlinx.coroutines.launch
 import java.util.*
 
 class TrainingAdd : AppCompatActivity() {
+    val dao = TrainingDatabase.getInstance(this).trainingDao
     private var dataText: TextView? = null
     var wybranaData:String? = null
     lateinit var exercise:String
@@ -62,7 +64,6 @@ class TrainingAdd : AppCompatActivity() {
     }
 }
     private fun newInput(LL:LinearLayout, btn:Button,btn2:Button){
-        val dao = TrainingDatabase.getInstance(this).trainingDao
         val list = arrayListOf<EditText>()
         btn.setOnClickListener {
             val inputLayout = layoutInflater.inflate(R.layout.input_layout,null)
@@ -79,14 +80,15 @@ class TrainingAdd : AppCompatActivity() {
                     listaKg.add(item.text.toString())
                 }
                 Intent(this, MainActivity::class.java).also {
-                    it.putStringArrayListExtra("EXTRA_EXERCISE",listaEx)
-                    it.putStringArrayListExtra("EXTRA_WEIGHT",listaKg)
-                    it.putExtra("EXTRA_DATE",wybranaData)
                     startActivity(it)
                 }
                 lifecycleScope.launch{
-                    val training = Training(listaEx,listaKg, wybranaData!!)
-                    dao.insertTraining(training)
+                    val date = Date(wybranaData.toString())
+                    dao.insertDate(date)
+                    for (i in listaEx.indices){
+                        val training = Training(listaEx[i],listaKg[i], wybranaData!!)
+                        dao.insertTraining(training)
+                    }
                 }
             }
         }

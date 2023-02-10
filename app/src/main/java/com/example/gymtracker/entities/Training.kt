@@ -1,12 +1,13 @@
 package com.example.gymtracker.entities
 
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
 data class Training (
-        @PrimaryKey
-        val exercise:ArrayList<String>,
-        val kg:ArrayList<String>,
-        val date:String
+        @PrimaryKey(autoGenerate = false)
+        var exercise:String,
+        var kg:String,
+        var date:String
         )

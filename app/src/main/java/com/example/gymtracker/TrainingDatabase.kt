@@ -2,10 +2,12 @@ package com.example.gymtracker
 
 import android.content.Context
 import androidx.room.*
+import com.example.gymtracker.entities.Date
 import com.example.gymtracker.entities.Training
 
 @Database(entities = [
-    Training::class
+    Training::class,
+    Date::class
 ],
     version = 1
 )
