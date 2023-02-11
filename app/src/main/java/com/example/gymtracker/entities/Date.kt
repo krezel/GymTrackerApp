@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Date(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
+    var id:Int?,
     var date:String
 )

@@ -1,5 +1,6 @@
 package com.example.gymtracker
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gymtracker.entities.Training
 import kotlinx.coroutines.launch
 
@@ -31,23 +34,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
     inner class InputTraining(private val dao: TrainingDao){
-        val addToList = findViewById<LinearLayout>(R.id.scroll_layout)
+        val recycler = findViewById<RecyclerView>(R.id.recycler)
         fun newTraining(){
             lifecycleScope.launch {
                 val date = dao.getDate()
-
+                val lista = mutableListOf<Training>()
                 for (i in date.indices) {
                     val listTraining = dao.getDateWithTraining(date[i])
-                            val dateBox = layoutInflater.inflate(R.layout.date_box, null)
-                            dateBox.findViewById<TextView>(R.id.tv_dateBOX).text = date[i]
-                            addToList.addView(dateBox)
                     for (x in listTraining[0].Training.indices){
-                        val trainingBox = layoutInflater.inflate(R.layout.training_box, null)
-                        trainingBox.findViewById<TextView>(R.id.tv_exerciseBOX).text = listTraining[0].Training[x].exercise
-                        trainingBox.findViewById<TextView>(R.id.tv_kgBOX).text = listTraining[0].Training[x].kg
-                        addToList.addView(trainingBox)
+                        lista.add(listTraining[0].Training[x])
                     }
                 }
+                val adapter = TrainingAdapter(lista)
+                recycler.adapter = adapter
+                recycler.layoutManager = LinearLayoutManager(this@MainActivity)
             }
             }
         fun delTraining(btn:Button){

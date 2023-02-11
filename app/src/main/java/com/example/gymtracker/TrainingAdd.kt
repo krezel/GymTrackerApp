@@ -83,10 +83,10 @@ class TrainingAdd : AppCompatActivity() {
                     startActivity(it)
                 }
                 lifecycleScope.launch{
-                    val date = Date(wybranaData.toString())
+                    val date = Date(null,wybranaData.toString())
                     dao.insertDate(date)
                     for (i in listaEx.indices){
-                        val training = Training(listaEx[i],listaKg[i], wybranaData!!)
+                        val training = Training(null,listaEx[i],listaKg[i], wybranaData!!)
                         dao.insertTraining(training)
                     }
                 }
